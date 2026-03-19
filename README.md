@@ -26,9 +26,10 @@ This project allows you to explore the vast MyAnimeList database using the publi
   - Interface to discover a random anime or manga.
   - Automatic content filter: the script checks the genres and age rating of the returned title. If adult content (Hentai, Erotica, Rx) is detected, a new request is automatically triggered until a "safe" title is found.
 
-* Error Handling and API Rate Limits:
+* Error Handling, Security and API Rate Limits:
   - Specific handling of HTTP 429 status code (Too Many Requests). Instead of breaking the page, a clear message informs the user of the temporary overload.
   - Wait times (setTimeout) integrated during multiple API calls on the homepage to avoid overloading the Jikan server.
+  - Security: Implementation of a custom HTML escaping utility to sanitize untrusted API data and user inputs, preventing DOM-based Cross-Site Scripting (XSS) vulnerabilities.
 
 ## Technologies Used
 
@@ -47,6 +48,7 @@ This project was an opportunity to practice and consolidate several key web deve
 4. Dynamic DOM Manipulation: Creating HTML elements on the fly (`document.createElement`), using Template Literals to inject complex blocks, and clearing containers.
 5. Simple Routing: Using `URLSearchParams` to retrieve variables (ID and type) passed from one page to another via the URL.
 6. Rate Limiting Management: Implementing logic to space out requests and handle server errors gracefully.
+7. Web Security Basics: Preventing DOM-based XSS attacks by sanitizing user inputs and third-party data before injecting them into the DOM via `innerHTML`.
 
 ## Installation and Usage
 

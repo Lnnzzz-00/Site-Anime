@@ -646,17 +646,19 @@ async function loadDetails() {
 }
 
 function renderDetailView(container, item, type) {
-    const title = item.title_english || item.title;
-    const originalTitle = item.title_japanese;
+    const title = escapeHTML(item.title_english || item.title);
+    const originalTitle = escapeHTML(item.title_japanese || '');
     const imageUrl = item.images.webp.large_image_url;
-    const synopsis = item.synopsis ? item.synopsis.replace(/\n/g, '<br>') : 'No synopsis available.';
     
+    const safeSynopsis = escapeHTML(item.synopsis || 'No synopsis available.');
+    const synopsis = safeSynopsis.replace(/\n/g, '<br>');
+
     const score = item.score ? item.score.toFixed(1) : 'N/A';
     const rank = item.rank ? `#${item.rank}` : 'N/A';
     const popularity = item.popularity ? `#${item.popularity}` : 'N/A';
     
-    const genres = item.genres.map(g => `<a href="#" class="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm text-gray-300 hover:bg-white/20 hover:text-white transition-colors">${g.name}</a>`).join('');
-    const themes = item.themes.map(t => `<a href="#" class="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm text-gray-300 hover:bg-white/20 hover:text-white transition-colors">${t.name}</a>`).join('');
+    const genres = item.genres.map(g => `<a href="#" class="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm text-gray-300 hover:bg-white/20 hover:text-white transition-colors">${escapeHTML(g.name)}</a>`).join('');
+    const themes = item.themes.map(t => `<a href="#" class="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm text-gray-300 hover:bg-white/20 hover:text-white transition-colors">${escapeHTML(t.name)}</a>`).join('');
     
     let typeSpecificInfo;
     if (type === 'anime') {
